@@ -19,6 +19,11 @@ import * as Material from '@angular/material';
     Material.MatTableModule,
     Material.MatIconModule,
     Material.MatSelectModule,
+    Material.MatToolbarModule,
+    Material.MatButtonModule,
+    Material.MatSidenavModule,
+    Material.MatIconModule,
+    Material.MatListModule
   ],
   exports: [
     Material.MatFormFieldModule,
@@ -34,6 +39,11 @@ import * as Material from '@angular/material';
     Material.MatTableModule,
     Material.MatIconModule,
     Material.MatSelectModule,
+    Material.MatToolbarModule,
+    Material.MatButtonModule,
+    Material.MatSidenavModule,
+    Material.MatIconModule,
+    Material.MatListModule
   ]
 })
 export class MaterialModule { }
