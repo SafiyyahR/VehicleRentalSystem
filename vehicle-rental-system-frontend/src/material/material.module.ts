@@ -23,7 +23,9 @@ import * as Material from '@angular/material';
     Material.MatButtonModule,
     Material.MatSidenavModule,
     Material.MatIconModule,
-    Material.MatListModule
+    Material.MatListModule,
+    Material.MatMenuModule,    
+    Material.MatExpansionModule
   ],
   exports: [
     Material.MatFormFieldModule,
@@ -43,7 +45,9 @@ import * as Material from '@angular/material';
     Material.MatButtonModule,
     Material.MatSidenavModule,
     Material.MatIconModule,
-    Material.MatListModule
+    Material.MatListModule,
+    Material.MatMenuModule,
+    Material.MatExpansionModule
   ]
 })
 export class MaterialModule { }

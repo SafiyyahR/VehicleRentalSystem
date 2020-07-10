@@ -5,43 +5,59 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
 
-@Document(collection="Booking")
-public class Booking  {
+@Document(collection = "Booking")
+public class Booking {
 
     @Id
     private String _id;
+    private String title;
     private Schedule schedule;
-    private Vehicle vehicle;
-    private String driverFirstName;
-    private String driverLastName;
+    private String vehicleId;
+    private String firstName;
+    private String lastName;
     private String dateOfBirth;
-    private String driverEmail;
-    private String driverTelNo;
-    private double totalRentalPrice;
+    private String email;
+    private String telNo;
+    private double total;
+    private boolean requestToDelete;
+    private boolean cancelled;
 
     //default constructor
-    public Booking(){}
-
-    //constructor
-    public Booking(String _id, Schedule schedule, Vehicle vehicle, String driverFirstName, String driverLastName, String dateOfBirth, String driverEmail, String driverTelNo, double totalRentalPrice) {
-        this._id = _id;
-        this.schedule = schedule;
-        this.vehicle = vehicle;
-        this.driverFirstName = driverFirstName;
-        this.driverLastName = driverLastName;
-        this.dateOfBirth = dateOfBirth;
-        this.driverEmail = driverEmail;
-        this.driverTelNo = driverTelNo;
-        this.totalRentalPrice = totalRentalPrice;
+    public Booking() {
     }
 
-    //setters and getters
+    //constructor
+
+
+    public Booking(String _id, String title, Schedule schedule, String vehicleId, String firstName, String lastName, String dateOfBirth, String email, String telNo, double total, boolean requestToDelete, boolean cancelled) {
+        this._id = _id;
+        this.title = title;
+        this.schedule = schedule;
+        this.vehicleId = vehicleId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.telNo = telNo;
+        this.total = total;
+        this.requestToDelete = requestToDelete;
+        this.cancelled = cancelled;
+    }
+
     public String get_id() {
         return _id;
     }
 
     public void set_id(String _id) {
         this._id = _id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Schedule getSchedule() {
@@ -52,28 +68,28 @@ public class Booking  {
         this.schedule = schedule;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public String getVehicleId() {
+        return vehicleId;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
-    public String getDriverFirstName() {
-        return driverFirstName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setDriverFirstName(String driverFirstName) {
-        this.driverFirstName = driverFirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getDriverLastName() {
-        return driverLastName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setDriverLastName(String driverLastName) {
-        this.driverLastName = driverLastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getDateOfBirth() {
@@ -84,65 +100,85 @@ public class Booking  {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getDriverEmail() {
-        return driverEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setDriverEmail(String driverEmail) {
-        this.driverEmail = driverEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getDriverTelNo() {
-        return driverTelNo;
+    public String getTelNo() {
+        return telNo;
     }
 
-    public void setDriverTelNo(String driverTelNo) {
-        this.driverTelNo = driverTelNo;
+    public void setTelNo(String telNo) {
+        this.telNo = telNo;
     }
 
-    public double getTotalRentalPrice() {
-        return totalRentalPrice;
+    public double getTotal() {
+        return total;
     }
 
-    public void setTotalRentalPrice(double totalRentalPrice) {
-        this.totalRentalPrice = totalRentalPrice;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    //toString method
-    @Override
-    public String toString() {
-        return "Booking[" +
-                "bookingID: " + _id + '\n' +
-                "Schedule: " + schedule + '\n' +
-                "vehicle: " + vehicle + '\n' +
-                " Driver First Name: " + driverFirstName + '\n' +
-                " Driver Last Name: " + driverLastName + '\n' +
-                " DateOf Birth: " + dateOfBirth + '\n' +
-                " Driver Email: " + driverEmail + '\n' +
-                " Driver Telephone Number: " + driverTelNo + '\n' +
-                "Total Rental Price: "+totalRentalPrice +'\n' +
-                ']';
+    public boolean isRequestToDelete() {
+        return requestToDelete;
     }
 
-    //equals and hashcode method
+    public void setRequestToDelete(boolean requestToDelete) {
+        this.requestToDelete = requestToDelete;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Booking)) return false;
         Booking booking = (Booking) o;
-        return Double.compare(booking.getTotalRentalPrice(), getTotalRentalPrice()) == 0 &&
+        return Double.compare(booking.getTotal(), getTotal()) == 0 &&
+                isRequestToDelete() == booking.isRequestToDelete() &&
+                isCancelled() == booking.isCancelled() &&
                 get_id().equals(booking.get_id()) &&
+                getTitle().equals(booking.getTitle()) &&
                 getSchedule().equals(booking.getSchedule()) &&
-                getVehicle().equals(booking.getVehicle()) &&
-                getDriverFirstName().equals(booking.getDriverFirstName()) &&
-                getDriverLastName().equals(booking.getDriverLastName()) &&
+                getVehicleId().equals(booking.getVehicleId()) &&
+                getFirstName().equals(booking.getFirstName()) &&
+                getLastName().equals(booking.getLastName()) &&
                 getDateOfBirth().equals(booking.getDateOfBirth()) &&
-                getDriverEmail().equals(booking.getDriverEmail()) &&
-                getDriverTelNo().equals(booking.getDriverTelNo());
+                getEmail().equals(booking.getEmail()) &&
+                getTelNo().equals(booking.getTelNo());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(get_id(), getSchedule(), getVehicle(), getDriverFirstName(), getDriverLastName(), getDateOfBirth(), getDriverEmail(), getDriverTelNo(), getTotalRentalPrice());
+        return Objects.hash(get_id(), getTitle(), getSchedule(), getVehicleId(), getFirstName(), getLastName(), getDateOfBirth(), getEmail(), getTelNo(), getTotal(), isRequestToDelete(), isCancelled());
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "_id='" + _id + '\'' +
+                ", title='" + title + '\'' +
+                ", schedule=" + schedule +
+                ", vehicleId='" + vehicleId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", email='" + email + '\'' +
+                ", telNo='" + telNo + '\'' +
+                ", total=" + total +
+                ", requestToDelete=" + requestToDelete +
+                ", cancelled=" + cancelled +
+                '}';
     }
 }

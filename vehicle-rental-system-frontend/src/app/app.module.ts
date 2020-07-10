@@ -10,12 +10,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IndexPage } from './pages/index/index.page';
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { AddVehiclePage } from './pages/add-vehicle/add-vehicle.page';
+import { BookingsPage } from './pages/bookings/bookings.page';
+import { ContactPage } from './pages/contact/contact.page';
+import { LoginPage } from './pages/login/login.page';
+import { LogoutPage } from './pages/logout/logout.page';
+import { SignupPage } from './pages/signup/signup.page';
+import { ViewBookingsPage } from './pages/view-bookings/view-bookings.page';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    IndexPage
+    IndexPage,
+    AddVehiclePage,
+    BookingsPage,
+    ContactPage,
+    LoginPage,
+    LogoutPage,
+    SignupPage,
+    ViewBookingsPage
   ],
   imports: [
     BrowserModule,
@@ -24,7 +38,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,    
+    ReactiveFormsModule,
     FlexLayoutModule
   ],
   providers: [],
