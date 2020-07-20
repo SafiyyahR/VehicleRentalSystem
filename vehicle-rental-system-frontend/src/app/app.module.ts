@@ -15,8 +15,12 @@ import { BookingsPage } from './pages/bookings/bookings.page';
 import { ContactPage } from './pages/contact/contact.page';
 import { LoginPage } from './pages/login/login.page';
 import { LogoutPage } from './pages/logout/logout.page';
-import { SignupPage } from './pages/signup/signup.page';
+import {ErrorPage} from './pages/error/error.page'
 import { ViewBookingsPage } from './pages/view-bookings/view-bookings.page';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { BookingService } from 'src/services/booking.service';
+import { VehicleService } from 'src/services/vehicle.service';
+import { SearchResultsPage } from './pages/search-results/search-results.page';
 
 @NgModule({
   declarations: [
@@ -28,8 +32,10 @@ import { ViewBookingsPage } from './pages/view-bookings/view-bookings.page';
     ContactPage,
     LoginPage,
     LogoutPage,
-    SignupPage,
-    ViewBookingsPage
+    ViewBookingsPage,
+    SearchBarComponent,
+    SearchResultsPage,
+    ErrorPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,7 @@ import { ViewBookingsPage } from './pages/view-bookings/view-bookings.page';
     ReactiveFormsModule,
     FlexLayoutModule
   ],
-  providers: [],
+  providers: [BookingService, VehicleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -15,19 +15,22 @@ public class Vehicle implements Comparable<Vehicle> {
     private String model;
     private String colour;
     private int regYear;
+    private int passengers;
     private double rentalPerHour;
     private boolean manual;
     private long mileage;
     private int engineDisplacement;
+    private int fuel;
     private JSONObject extraFeatures;
     private VehicleImage vehicleImage;
-    private boolean maintenance;
+    //available, damaged, not in use
+    private String status;
 
     //default constructor
     public Vehicle() {
     }
 
-    public Vehicle(String _id, String type, String plateNumber, String make, String model, String colour, int regYear, double rentalPerHour, boolean manual, long mileage, int engineDisplacement, JSONObject extraFeatures, VehicleImage vehicleImage, boolean maintenance) {
+    public Vehicle(String _id, String type, String plateNumber, String make, String model, String colour, int regYear, int passengers, double rentalPerHour, boolean manual, long mileage, int engineDisplacement, int fuel, JSONObject extraFeatures, VehicleImage vehicleImage, String status) {
         this._id = _id;
         this.type = type;
         this.plateNumber = plateNumber;
@@ -35,13 +38,15 @@ public class Vehicle implements Comparable<Vehicle> {
         this.model = model;
         this.colour = colour;
         this.regYear = regYear;
+        this.passengers = passengers;
         this.rentalPerHour = rentalPerHour;
         this.manual = manual;
         this.mileage = mileage;
         this.engineDisplacement = engineDisplacement;
+        this.fuel = fuel;
         this.extraFeatures = extraFeatures;
         this.vehicleImage = vehicleImage;
-        this.maintenance = maintenance;
+        this.status = status;
     }
 
     public String get_id() {
@@ -100,6 +105,14 @@ public class Vehicle implements Comparable<Vehicle> {
         this.regYear = regYear;
     }
 
+    public int getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(int passengers) {
+        this.passengers = passengers;
+    }
+
     public double getRentalPerHour() {
         return rentalPerHour;
     }
@@ -132,6 +145,14 @@ public class Vehicle implements Comparable<Vehicle> {
         this.engineDisplacement = engineDisplacement;
     }
 
+    public int getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(int fuel) {
+        this.fuel = fuel;
+    }
+
     public JSONObject getExtraFeatures() {
         return extraFeatures;
     }
@@ -148,12 +169,12 @@ public class Vehicle implements Comparable<Vehicle> {
         this.vehicleImage = vehicleImage;
     }
 
-    public boolean isMaintenance() {
-        return maintenance;
+    public String getStatus() {
+        return status;
     }
 
-    public void setMaintenance(boolean maintenance) {
-        this.maintenance = maintenance;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -162,11 +183,12 @@ public class Vehicle implements Comparable<Vehicle> {
         if (!(o instanceof Vehicle)) return false;
         Vehicle vehicle = (Vehicle) o;
         return getRegYear() == vehicle.getRegYear() &&
+                getPassengers() == vehicle.getPassengers() &&
                 Double.compare(vehicle.getRentalPerHour(), getRentalPerHour()) == 0 &&
                 isManual() == vehicle.isManual() &&
                 getMileage() == vehicle.getMileage() &&
                 getEngineDisplacement() == vehicle.getEngineDisplacement() &&
-                isMaintenance() == vehicle.isMaintenance() &&
+                getFuel() == vehicle.getFuel() &&
                 get_id().equals(vehicle.get_id()) &&
                 getType().equals(vehicle.getType()) &&
                 getPlateNumber().equals(vehicle.getPlateNumber()) &&
@@ -174,12 +196,13 @@ public class Vehicle implements Comparable<Vehicle> {
                 getModel().equals(vehicle.getModel()) &&
                 getColour().equals(vehicle.getColour()) &&
                 getExtraFeatures().equals(vehicle.getExtraFeatures()) &&
-                getVehicleImage().equals(vehicle.getVehicleImage());
+                getVehicleImage().equals(vehicle.getVehicleImage()) &&
+                getStatus().equals(vehicle.getStatus());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(get_id(), getType(), getPlateNumber(), getMake(), getModel(), getColour(), getRegYear(), getRentalPerHour(), isManual(), getMileage(), getEngineDisplacement(), getExtraFeatures(), getVehicleImage(), isMaintenance());
+        return Objects.hash(get_id(), getType(), getPlateNumber(), getMake(), getModel(), getColour(), getRegYear(), getPassengers(), getRentalPerHour(), isManual(), getMileage(), getEngineDisplacement(), getFuel(), getExtraFeatures(), getVehicleImage(), getStatus());
     }
 
     @Override
@@ -192,17 +215,18 @@ public class Vehicle implements Comparable<Vehicle> {
                 ", model='" + model + '\'' +
                 ", colour='" + colour + '\'' +
                 ", regYear=" + regYear +
+                ", passengers=" + passengers +
                 ", rentalPerHour=" + rentalPerHour +
                 ", manual=" + manual +
                 ", mileage=" + mileage +
                 ", engineDisplacement=" + engineDisplacement +
+                ", fuel=" + fuel +
                 ", extraFeatures=" + extraFeatures +
                 ", vehicleImage=" + vehicleImage +
-                ", maintenance=" + maintenance +
+                ", status='" + status + '\'' +
                 '}';
     }
 
-    //compareTo method used to sort the list according to the make
     @Override
     public int compareTo(Vehicle o) {
         return this.getMake().compareTo(o.getMake());

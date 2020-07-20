@@ -1,4 +1,6 @@
-package com.example.vehiclerentalsystembackend.model;
+package com.example.vehiclerentalsystembackend.utils;
+
+import com.example.vehiclerentalsystembackend.model.Vehicle;
 
 import java.util.Comparator;
 

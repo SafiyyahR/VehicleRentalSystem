@@ -1,0 +1,9 @@
+mat-label{
+    color: black !important;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline{
+    color: black !important;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: black !important;
+}

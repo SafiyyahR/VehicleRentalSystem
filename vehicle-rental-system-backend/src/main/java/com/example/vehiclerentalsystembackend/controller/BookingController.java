@@ -27,6 +27,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/bookings")
 public class BookingController {
 
@@ -38,7 +39,7 @@ public class BookingController {
     private CounterRepository counterRepository;
     ObjectMapper objectMapper = new ObjectMapper();
 
-    EmailTemplate emailTemplate= new EmailTemplate();
+    EmailTemplate emailTemplate = new EmailTemplate();
 
     public Vehicle getVehicleById(String id) throws ResourceNotFoundException {
         return vehicleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Booking not found for this id :: " + id));
@@ -75,6 +76,7 @@ public class BookingController {
         try {
             System.out.println(email);
             List<Booking> bookings = bookingRepository.findBookingsByEmail(email);
+            Collections.sort(bookings);
             if (bookings != null) {
                 obj.put("message", "Bookings available");
                 obj.put("bookings", bookings);
@@ -96,8 +98,9 @@ public class BookingController {
     @GetMapping("/available")
     public ResponseEntity<JSONObject> findAvailableVehicles(@RequestParam(value = "pickupdate") String pickUp, @RequestParam(value = "dropoffdate") String dropOff) throws ParseException {
         JSONObject obj = new JSONObject();
+        System.out.println(pickUp+" "+dropOff);
         try { //all the vehicles in the database is retrieved then put into a hashset
-            List<Vehicle> vehicleList = vehicleRepository.findVehiclesByMaintenance(false);
+            List<Vehicle> vehicleList = vehicleRepository.findVehiclesByStatus("available");
             Set<Vehicle> availableVehicles = new HashSet<>(vehicleList);
             availableVehicles.addAll(vehicleList);
             System.out.println("available\n" + availableVehicles);
@@ -119,7 +122,7 @@ public class BookingController {
                     } else if (pickUpDate.before(bookedPDate) && pickUpDate.before(bookedDDate) && dropOffDate.before(bookedPDate) && dropOffDate.before(bookedDDate)) {
                         availableFlag = true;
                     }
-                } else if (pickUpDate.equals(bookedPDate) && dropOffDate.equals(bookedDDate) && booking.isCancelled()) {
+                } else if (pickUpDate.equals(bookedPDate) && dropOffDate.equals(bookedDDate) && !(booking.getStatus().equalsIgnoreCase("Cancelled"))) {
                     availableFlag = true;
                 }
                 //if the vehicle isn't available then the it is removed from the available Vehicles HashSet
@@ -236,7 +239,7 @@ public class BookingController {
             Booking booking = bookingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Booking not found for this id :: " + id));
             if (booking != null) {
                 bookingRepository.delete(booking);
-                booking.setRequestToDelete(true);
+                booking.setStatus("Request To Delete");
                 bookingRepository.insert(booking);
                 Vehicle vehicle = getVehicleById(booking.getVehicleId());
                 String message = "Dear " + booking.getTitle() + " " + booking.getFirstName() + " " + booking.getLastName() + ",<br/>Your request to cancel your booking has been sent to us and our staff will get back to you within 24 hours. However, for any urgent issues regarding your booking please contact us on 0094777234596.<br/><br/>Regards,<br/>Safiyyah Thur Rahman.";
@@ -265,7 +268,7 @@ public class BookingController {
             Booking booking = bookingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Booking not found for this id :: " + id));
             if (booking != null) {
                 bookingRepository.delete(booking);
-                booking.setCancelled(true);
+                booking.setStatus("Cancelled");
                 bookingRepository.insert(booking);
                 Vehicle vehicle = getVehicleById(booking.getVehicleId());
                 String message = "Dear " + booking.getTitle() + " " + booking.getFirstName() + " " + booking.getLastName() + ",<br/>Your request to cancel your booking has been confirmed and our staff will contact you within 24 hours to confirm which refund method you will prefer. However, for any urgent issues regarding your cancelled booking please contact us on 0094777234596.<br/><br/>Regards,<br/>Safiyyah Thur Rahman.";
@@ -291,6 +294,8 @@ public class BookingController {
     public ResponseEntity<JSONObject> getAllBookings() {
         List<Booking> bookings = bookingRepository.findAll();
         JSONObject obj = new JSONObject();
+
+        Collections.sort(bookings);
         try {
             if (bookings != null) {
                 obj.put("message", "Bookings available");

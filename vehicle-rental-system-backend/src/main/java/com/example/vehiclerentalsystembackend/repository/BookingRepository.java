@@ -9,4 +9,5 @@ public interface BookingRepository extends MongoRepository<Booking, String> {
 
     List<Booking> findBookingsByEmail(String email);
     List<Booking> findBookingsByVehicleId(String id);
+    List<Booking> findBookingsByStatus(String status);
 }

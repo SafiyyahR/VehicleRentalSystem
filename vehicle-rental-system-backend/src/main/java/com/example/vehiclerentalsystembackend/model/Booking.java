@@ -6,10 +6,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Objects;
 
 @Document(collection = "Booking")
-public class Booking {
+public class Booking implements Comparable<Booking> {
 
     @Id
     private String _id;
+    //Mr., Ms., Mrs., Miss
     private String title;
     private Schedule schedule;
     private String vehicleId;
@@ -19,17 +20,15 @@ public class Booking {
     private String email;
     private String telNo;
     private double total;
-    private boolean requestToDelete;
-    private boolean cancelled;
+    //confirmed, request to delete, cancelled
+    private String status;
 
     //default constructor
     public Booking() {
     }
 
     //constructor
-
-
-    public Booking(String _id, String title, Schedule schedule, String vehicleId, String firstName, String lastName, String dateOfBirth, String email, String telNo, double total, boolean requestToDelete, boolean cancelled) {
+    public Booking(String _id, String title, Schedule schedule, String vehicleId, String firstName, String lastName, String dateOfBirth, String email, String telNo, double total, String status) {
         this._id = _id;
         this.title = title;
         this.schedule = schedule;
@@ -40,8 +39,7 @@ public class Booking {
         this.email = email;
         this.telNo = telNo;
         this.total = total;
-        this.requestToDelete = requestToDelete;
-        this.cancelled = cancelled;
+        this.status = status;
     }
 
     public String get_id() {
@@ -124,20 +122,12 @@ public class Booking {
         this.total = total;
     }
 
-    public boolean isRequestToDelete() {
-        return requestToDelete;
+    public String getStatus() {
+        return status;
     }
 
-    public void setRequestToDelete(boolean requestToDelete) {
-        this.requestToDelete = requestToDelete;
-    }
-
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -146,8 +136,6 @@ public class Booking {
         if (!(o instanceof Booking)) return false;
         Booking booking = (Booking) o;
         return Double.compare(booking.getTotal(), getTotal()) == 0 &&
-                isRequestToDelete() == booking.isRequestToDelete() &&
-                isCancelled() == booking.isCancelled() &&
                 get_id().equals(booking.get_id()) &&
                 getTitle().equals(booking.getTitle()) &&
                 getSchedule().equals(booking.getSchedule()) &&
@@ -156,12 +144,13 @@ public class Booking {
                 getLastName().equals(booking.getLastName()) &&
                 getDateOfBirth().equals(booking.getDateOfBirth()) &&
                 getEmail().equals(booking.getEmail()) &&
-                getTelNo().equals(booking.getTelNo());
+                getTelNo().equals(booking.getTelNo()) &&
+                getStatus().equals(booking.getStatus());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(get_id(), getTitle(), getSchedule(), getVehicleId(), getFirstName(), getLastName(), getDateOfBirth(), getEmail(), getTelNo(), getTotal(), isRequestToDelete(), isCancelled());
+        return Objects.hash(get_id(), getTitle(), getSchedule(), getVehicleId(), getFirstName(), getLastName(), getDateOfBirth(), getEmail(), getTelNo(), getTotal(), getStatus());
     }
 
     @Override
@@ -177,8 +166,13 @@ public class Booking {
                 ", email='" + email + '\'' +
                 ", telNo='" + telNo + '\'' +
                 ", total=" + total +
-                ", requestToDelete=" + requestToDelete +
-                ", cancelled=" + cancelled +
+                ", status='" + status + '\'' +
                 '}';
     }
+
+    @Override
+    public int compareTo(Booking booking) {
+        return this.getStatus().compareTo(booking.getStatus());
+    }
+
 }

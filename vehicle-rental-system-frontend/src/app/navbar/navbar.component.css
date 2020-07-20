@@ -20,12 +20,11 @@
 }
 
 .custom-header .mat-list-item {
-  color: white !important;
+  color: white;
 }
 
 .custom-header {
-  background-color: #3f51b5;
-  color: white !important;
+  color: white;
 }
 
 .mat-expansion-panel {
@@ -40,9 +39,20 @@
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
-.menu-lg-item {
+.menu-lg-item,.panel-item{
   font-size: 16px;
   margin: 0;
+}
+
+.panel-item{
+  font-weight: 500;
+}
+
+.menu-lg-item:hover, .panel-item:hover {
+  color:black !important ;
+  background-color: white !important;
+  text-decoration: none;
+  border-radius: 5px;
 }
 
 .mat-list-item-content, .mat-list-item-ripple, .mat-list-text, .mat-ripple {
@@ -51,4 +61,8 @@
 
 .mat-expansion-indicator {
   display: none !important;
+}
+
+.bg-black{
+  background-color: black;
 }

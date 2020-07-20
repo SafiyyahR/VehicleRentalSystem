@@ -70,6 +70,7 @@ export class BookingService {
       .append('pickupdate', this.nowSchedule.pickUpDate)
       .append('dropoffdate', this.nowSchedule.dropOffDate);
     console.log(params);
+    console.log(this.baseUrl,"/",route);
     return this.http.get(`${this.baseUrl}/${route}`, { params: params });
   }
 

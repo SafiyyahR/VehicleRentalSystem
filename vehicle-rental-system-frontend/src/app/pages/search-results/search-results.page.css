@@ -1,0 +1,18 @@
+.automatic-transmission-class {
+    border-radius: 50%;
+    border: #000000DE;
+    background-color: #000000DE;
+    color: white;
+    padding: 3px 7px;
+    margin: 0;
+}
+
+.iconify {
+    width: 24px;
+    height: 24px;
+}
+
+.inline-icon {
+    vertical-align: bottom;
+    font-size: 25px !important;
+ }

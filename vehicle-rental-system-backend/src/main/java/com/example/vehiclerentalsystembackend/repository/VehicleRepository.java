@@ -10,5 +10,5 @@ import java.util.List;
 public interface VehicleRepository extends MongoRepository<Vehicle, String> {
 
     List<Vehicle> findVehiclesByType(String type);
-    List<Vehicle> findVehiclesByMaintenance(boolean option);
+    List<Vehicle> findVehiclesByStatus(String type);
 }

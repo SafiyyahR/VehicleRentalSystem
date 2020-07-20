@@ -1,16 +1,25 @@
 export class Vehicle {
 
-   id: string;
-   plateNumber: string;
-   make: string;
-   model: string;
-   colour: string;
-   registrationYear: number;
-   rentalPerHour: number;
-   isManual: boolean;
-   mileage: number;
-   engineDisplacement: number;
-   _class: string;
+   _id:string;
+   type:string;
+   plateNumber:string;
+   make:string;
+   model:string;
+   colour:string;
+   regYear:number;
+   rentalPerHour:number;
+   manual:boolean;
+   mileage:number;
+   fuel:number;
+   passengers:number;
+   engineDisplacement:number;
+   extraFeatures: any;
+   vehicleImage: any;
+   //available, damaged, not in use
+   status:string;
 
+   constructor(){
+
+   }
 
 }

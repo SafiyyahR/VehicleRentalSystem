@@ -8,23 +8,40 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   items: Array<{ name: string, link: string }>;
+  isAdmin: boolean = false;
+  navHome:string;
   constructor() {
-    this.items = [{
-      name: "Home",
-      link: ""
-    },
-    {
-      name: "Bookings",
-      link: "/bookings"
-    },
-    {
-      name: "Contact Us",
-      link: "/contact"
-    },
-    {
-      name: "Signup",
-      link: "/signup"
-    }];
+    if (this.isAdmin) {
+      this.items = [
+      {
+        name: "BOOKINGS",
+        link: "/adbookings"
+      },
+      {
+        name: "VEHICLES",
+        link: "/advehicles"
+      },
+      {
+        name: "NOTIFICATIONS",
+        link: "/notifications"
+      }];
+      this.navHome="/adhome"
+    } else {
+      this.items = [{
+        name: "HOME",
+        link: "/index"
+      },
+      {
+        name: "BOOKINGS",
+        link: "/bookings"
+      },
+      {
+        name: "CONTACT US",
+        link: "/contact"
+      },
+      ];
+      this.navHome="/index"
+    } 
   }
 
   ngOnInit() {

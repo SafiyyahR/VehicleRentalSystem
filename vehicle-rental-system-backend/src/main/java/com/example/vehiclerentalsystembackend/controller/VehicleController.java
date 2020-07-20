@@ -5,6 +5,9 @@ import com.example.vehiclerentalsystembackend.repository.BookingRepository;
 import com.example.vehiclerentalsystembackend.repository.CounterRepository;
 import com.example.vehiclerentalsystembackend.repository.VehicleRepository;
 import com.example.vehiclerentalsystembackend.utils.EmailTemplate;
+import com.example.vehiclerentalsystembackend.utils.SortByMileage;
+import com.example.vehiclerentalsystembackend.utils.SortByPrice;
+import com.example.vehiclerentalsystembackend.utils.SortByStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
 import org.bson.BsonBinarySubType;
@@ -42,15 +45,14 @@ public class VehicleController {
     private void cancelBookings(Vehicle vehicle) throws MessagingException, ParseException {
         List<Booking> bookings = bookingRepository.findBookingsByVehicleId(vehicle.get_id());
         Date currentDate = new Date();
-        System.out.println(currentDate);
         for (Booking booking : bookings) {
             Date bookedPDate = new SimpleDateFormat("MM/dd/yyyy").parse(booking.getSchedule().getPickUpDate());
-            if ((bookedPDate.equals(currentDate) || bookedPDate.after(currentDate)) && !booking.isCancelled()) {
+            if ((bookedPDate.equals(currentDate) || bookedPDate.after(currentDate)) && !(booking.getStatus().equalsIgnoreCase("Cancelled"))) {
                 String message = "Dear " + booking.getTitle() + " " + booking.getFirstName() + " " + booking.getLastName() + ",<br/>Your booking has been cancelled as result of an accident which took place to the vehicle you booked. One of our staff members will contact you within 2 hours to discuss the refund options available. However, for any urgent issues regarding your cancelled booking please contact us on 0094777234596.<br/><br/>Regards,<br/>Safiyyah Thur Rahman.";
                 String subject = "Urgent Attention Required VRS Booking (ID: " + booking.get_id() + ") - " + vehicle.getMake() + " " + vehicle.getModel();
                 emailTemplate.sendEmail(message, booking.getEmail(), subject);
                 bookingRepository.delete(booking);
-                booking.setCancelled(true);
+                booking.setStatus("Cancelled");
                 bookingRepository.insert(booking);
             }
         }
@@ -75,6 +77,10 @@ public class VehicleController {
                 resultList.sort(new SortByPrice().reversed());
             } else if (sort.equalsIgnoreCase("price+")) {
                 resultList.sort(new SortByPrice());
+            } else if (sort.equalsIgnoreCase("status")) {
+                resultList.sort(new SortByStatus());
+            } else if (sort.equalsIgnoreCase("mileage")) {
+                resultList.sort(new SortByMileage());
             } else {
                 Collections.sort(resultList);
             }
@@ -128,10 +134,7 @@ public class VehicleController {
             Vehicle updatedVehicle = objectMapper.readValue(vehicleString, Vehicle.class);
             //the booking is first retrieved
             Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Vehicle not found for this id :: " + id));
-            System.out.println(vehicle);
             if (vehicle != null) {
-                System.out.println(vehicle);
-                System.out.println(file != null);
                 if (file == null) {
                     updatedVehicle.setVehicleImage(vehicle.getVehicleImage());
                 } else {
@@ -140,14 +143,13 @@ public class VehicleController {
                     vehicleImage.setImageTitle(file.getOriginalFilename());
                     updatedVehicle.setVehicleImage(vehicleImage);
                 }
-                System.out.println(updatedVehicle);
                 // the booking is then deleted and replaced by the booking passed as a parameter after the vehicle has been set
                 vehicleRepository.delete(vehicle);
                 final Vehicle newVehicle = vehicleRepository.insert(updatedVehicle);
-                if (updatedVehicle.isMaintenance()) {
+                if (!updatedVehicle.getStatus().equalsIgnoreCase("available")) {
                     cancelBookings(vehicle);
                 }
-                obj.put("message", "Vehicle Available");
+                obj.put("message", "Vehicle updated");
                 obj.put("updatedVehicle", newVehicle);
                 obj.put("sent", true);
                 return ResponseEntity.status(200).body(obj);
@@ -177,9 +179,12 @@ public class VehicleController {
             //the id is set using the help of the counter object
             //the same id is set to the schedule
             vehicle.set_id(_id);
+            String[] array=file.getOriginalFilename().split("\\.");
+            String fileType=array[array.length-1];
             VehicleImage vehicleImage = new VehicleImage();
             vehicleImage.setImage(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
             vehicleImage.setImageTitle(file.getOriginalFilename());
+            vehicleImage.setFileType(fileType);
             vehicle.setVehicleImage(vehicleImage);
             //the booking is inserted into the collection
             Vehicle insertedVehicle = vehicleRepository.insert(vehicle);
@@ -204,7 +209,6 @@ public class VehicleController {
     @GetMapping("/{id}")
     public ResponseEntity<JSONObject> getVehicleById(@PathVariable(value = "id") String id) throws ResourceNotFoundException {
         JSONObject obj = new JSONObject();
-        System.out.println(id);
         try {
             Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Vehicle not found for this id :: " + id));
             if (vehicle != null) {
