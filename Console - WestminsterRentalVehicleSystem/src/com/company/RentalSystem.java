@@ -69,7 +69,7 @@ public class RentalSystem {
                     case "f":
                         rentalVehicleManager.save();
                         Runtime rt = Runtime.getRuntime();
-                        rt.exec("cmd /c start cmd.exe /K \"cd .. && cd angular-front-end && ng serve -o\"");
+                        rt.exec("cmd /c start cmd.exe /K \"cd .. && cd front-end && ng serve -o\"");
                         rt.exec("cmd /c start cmd.exe /K \"cd .. && cd oop-cw-spring-back-end && java -jar target\\oop-cw-spring-back-end-0.0.1-SNAPSHOT.jar\"");
                         flag = false;
                         break;

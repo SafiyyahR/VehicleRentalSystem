@@ -1,0 +1,62 @@
+<!--the heading-->
+<div class="heading-top">
+    <h3 id="heading" class="text-white">List of Vehicles</h3>
+    <div id="sort-buttons" class="text-white text-right">
+        <!-- <button mat-stroked-button (click)="sort('price-')">SORT BY PRICE </button>
+                <button mat-stroked-button (click)="sort('make')">SORT BY MAKE </button> -->
+    </div>
+</div>
+<!--the end of heading-->
+<!--if no vehicles are available then this card would be displayed -->
+<mat-card *ngIf="!vehicles">
+    <mat-card-header>
+    </mat-card-header>
+    <mat-card-content class="text-center">
+        <h2>All vehicles are booked during the selected dates</h2>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+        <button mat-raised-button color="primary" (click)="goBack()">BOOK</button>
+    </mat-card-actions>
+</mat-card>
+<!--if there are available vehicles for a specific date then the below grid list will be displayed-->
+<mat-grid-list cols="2" rowHeight="250px">
+    <!--ngFor is used to iterate through the list of vehicle-->
+    <mat-grid-tile *ngFor="let vehicle of vehicles">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{vehicle.make}} {{vehicle.model}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-grid-list cols="2" rowHeight="10:1">
+                    <!--if the attribute _class of vehicle contains the word Car the the type is car else it is checked if it is a van else the type is motorbike-->
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Car')">Type: Car
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Van')">Type: Van
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Motorbike')">Type: Motorbike
+                    </mat-grid-tile>
+                    <mat-grid-tile>Rate/hr: &#163;{{vehicle.rentalPerHour}}</mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle.isManual">Transmission: Manual</mat-grid-tile>
+                    <mat-grid-tile *ngIf="!vehicle.isManual">Transmission: Automatic</mat-grid-tile>
+                    <!--the below grid- tile will be displayed based on the type of the attribute-->
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Car') || vehicle._class.includes('Van')">Seating
+                        Capacity:
+                        {{vehicle.noOfSeats}}</mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle.hasAC && vehicle._class.includes('Car')">AC: True</mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Van')">No. of Luggages: {{vehicle.noOfLuggages}}
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Motorbike')">Motorbike Style: {{vehicle.style}}
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle.hasHelmet && vehicle._class.includes('Motorbike')">Helmet:
+                        {{vehicle.hasHelmet}}
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-card-content>
+            <!--the book button is used to navigate to  new page to reserve the details-->
+            <mat-card-actions class="text-right">
+                <button mat-raised-button color="primary" (click)="reserve(vehicle)">BOOK</button>
+            </mat-card-actions>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>
+<!--end of the list-->

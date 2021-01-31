@@ -1,0 +1,22 @@
+mat-card{
+    margin: 2%;
+    width:100%;
+}
+#heading{
+    width: 50%;
+    float: left;
+}
+#sort-buttons{
+    width: 50%;
+    float: left;
+}
+
+#sMakeBtn{
+    margin: 0px 15px 0px 10px;
+}
+
+#filter-card{
+    width: 220px;
+    height: 75px;
+    padding: 12px
+}

@@ -1,0 +1,114 @@
+<h2 mat-dialog-title>Booking Ref No. : {{booking._id}}</h2>
+<div mat-dialog-content>
+    <mat-grid-list cols="4" rowHeight="1:1.5">
+        <mat-grid-tile>
+            <!--the reservation information has the schedule and the total price to pay-->
+            <mat-list>
+                <h3 id="subHeader1" mat-subheader>RESERVATION INFORMTION</h3>
+                <mat-list-item>
+                    <h4 mat-line>Date Booked: {{booking.schedule.dateBooked}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line>Pick-Up Date: {{booking.schedule.pickUpDate}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line>Drop-Off Date: {{booking.schedule.dropOffDate}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line>Total Rental Price: &#163;{{booking.totalRentalPrice}}</h4>
+                </mat-list-item>
+            </mat-list>
+            <!--end of the list-->
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <!--vehicle information of the booking-->
+            <mat-list>
+                <h3 id="subHeader2" mat-subheader>VEHICLE INFORMATION</h3>
+                <mat-list-item *ngIf="booking.vehicle._class.includes('Motorbike')">
+                    <h4 mat-line>Type: Motorbike</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle._class.includes('Car')">
+                    <h4 mat-line>Type: Car</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle._class.includes('Van')">
+                    <h4 mat-line>Type: Van</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line>Make: {{booking.vehicle.make}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line>Model: {{booking.vehicle.model}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line>Rate/hr: &#163;{{booking.vehicle.rentalPerHour}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line>Colour: {{booking.vehicle.colour}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line>Registration Year: {{booking.vehicle.registrationYear}}</h4>
+                </mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-list id="vehicleSub">
+                <mat-list-item>
+                    <h4 mat-line>Mileage: {{booking.vehicle.mileage}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line>Engine Displacement: {{booking.vehicle.engineDisplacement}}</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle.isManual">
+                    <h4 mat-line>Transmission: Manual</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="!booking.vehicle.isManual">
+                    <h4 mat-line>Transmission: Automatic</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle._class.includes('Car') || booking.vehicle._class.includes('Van')">
+                    <h4 mat-line>Seating Capacity: {{booking.vehicle.noOfSeats}}</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle._class.includes('Car')">
+                    <h4 mat-line>No. of Doors: {{booking.vehicle.noOfDoors}}</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle.hasAC && booking.vehicle._class.includes('Car')">
+                    <h4 mat-line>AC: True</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle._class.includes('Van')">
+                    <h4 mat-line>No. of Luggages: {{booking.vehicle.noOfLuggages}}</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle._class.includes('Motorbike')">
+                    <h4 mat-line>Motorbike Style {{booking.vehicle.style}}</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle.hasHelmet && vehicle._class.includes('Motorbike')">
+                    <h4 mat-line>Helmet: {{booking.vehicle.hasHelmet}}</h4>
+                </mat-list-item>
+                <mat-list-item *ngIf="booking.vehicle._class.includes('Motorbike')">
+                    <h4 mat-line>Locker Box: {{booking.vehicle.hasLockerBox}}</h4>
+                </mat-list-item>
+            </mat-list>
+            <!--end of vehicle information-->
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <!--driver's details-->
+            <mat-list>
+                <h3 mat-subheader id="subHeader3">DRIVER'S DETAILS</h3>
+                <mat-list-item>
+                    <h4 mat-line>First Name: {{booking.driverFirstName}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line> Last Name: {{booking.driverLastName}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line> Date of Birth: {{booking.dateOfBirth}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line> Email: {{booking.driverEmail}}</h4>
+                </mat-list-item>
+                <mat-list-item>
+                    <h4 mat-line> Contact Number: {{booking.driverTelNo}}</h4>
+                </mat-list-item>
+            </mat-list>
+            <!--end of the driver's details-->
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

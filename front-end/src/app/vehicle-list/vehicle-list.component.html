@@ -1,0 +1,62 @@
+
+<!--the heading --><div class="heading-top">
+    <h3 id="heading" class="text-white">List of Vehicles</h3>
+    <div id="sort-buttons" class="text-white text-right">
+        <button id="sPriceBtn" mat-raised-button color="primary" (click)="sort('price-')">SORT BY PRICE </button>
+        <button id="sMakeBtn" mat-raised-button color="primary" (click)="sort('make')">SORT BY MAKE </button>
+    </div>
+</div>
+<!--the end of the heading-->
+<!--the select is used to filter the vehicles according to the type-->
+<div id="type-filter">
+    <mat-card id="filter-card">
+        <mat-card-content>
+            <mat-form-field appearance="outline">
+                <mat-label>Filter By Type</mat-label>
+                <mat-select (selectionChange)="onTypeChange($event)" [value]="types[0]">
+                    <mat-option *ngFor="let type of types" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-card-content>
+    </mat-card>
+</div>
+<!--end of the select-->
+<!--list begins / the details of each vehicle is displayed-->
+<mat-grid-list cols="2" rowHeight="250px">
+    <!--ngFor is used to iterate through the list and display each vehicle-->
+    <mat-grid-tile *ngFor="let vehicle of vehicles | async">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{vehicle.make}} {{vehicle.model}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-grid-list cols="2" rowHeight="10:1">
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Car')">Type: Car
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Van')">Type: Van
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Motorbike')">Type: Motorbike
+                    </mat-grid-tile>
+                    <mat-grid-tile>Rate/hr: &#163;{{vehicle.rentalPerHour}}</mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle.isManual">Transmission: Manual</mat-grid-tile>
+                    <mat-grid-tile *ngIf="!vehicle.isManual">Transmission: Automatic</mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Car') || vehicle._class.includes('Van')">Seating Capacity:
+                        {{vehicle.noOfSeats}}</mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle.hasAC && vehicle._class.includes('Car')">AC: True</mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Van')">No. of Luggages: {{vehicle.noOfLuggages}}
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle._class.includes('Motorbike')">Motorbike Style: {{vehicle.style}}</mat-grid-tile>
+                    <mat-grid-tile *ngIf="vehicle.hasHelmet && vehicle._class.includes('Motorbike')">Helmet: {{vehicle.hasHelmet}}
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-card-content>
+            <!--if the user clicks the more button then a modal is opened and the more details of the vehicle is displayed-->
+            <mat-card-actions class="text-right">
+                <button mat-raised-button color="primary" (click)="openDialog(vehicle)">MORE</button>
+            </mat-card-actions>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>
+<!--end of the list-->

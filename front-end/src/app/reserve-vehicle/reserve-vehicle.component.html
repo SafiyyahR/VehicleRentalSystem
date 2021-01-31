@@ -1,0 +1,121 @@
+<!--heading-->
+<div class="heading-top">
+    <h3 id="heading" class="text-white">BOOK YOUR VEHICLE RENTAL</h3>
+</div>
+<!--end of heading-->
+<!--grid is used to display some of the reservation information and a form to enter the driver's details-->
+<mat-grid-list id="infoGrid" cols="7">
+    <mat-grid-tile colspan="2">
+        <!--the card used to display the details of the vehicle and the schedule of the booking-->
+        <mat-card id="vehicleDet">
+            <mat-card-content>
+                <mat-list>
+                    <!--the schedule information-->
+                    <h3 mat-subheader>RESERVATION INFORMTION</h3>
+                    <mat-list-item role="listitem">
+                        Pick-Up Date: {{schedule.pickUpDate}}
+                    </mat-list-item>
+                    <mat-list-item>
+                        <h4 mat-line>Drop-Off Date: {{schedule.dropOffDate}}</h4>
+                    </mat-list-item>
+                    <!--end of the schedule information-->
+                    <mat-divider></mat-divider>
+                    <!--the vehicle information-->
+                    <h3 mat-subheader>VEHICLE INFORMATION</h3>
+                    <mat-list-item *ngIf="vehicle._class.includes('Motorbike')">
+                        <h4 mat-line>Type: Motorbike</h4>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="vehicle._class.includes('Car')">
+                        <h4 mat-line>Type: Car</h4>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="vehicle._class.includes('Van')">
+                        <h4 mat-line>Type: Van</h4>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <h4 mat-line>Rate/hr: &#163;{{vehicle.rentalPerHour}}</h4>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="vehicle.isManual">
+                        <h4 mat-line>Transmission: Manual</h4>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="!vehicle.isManual">
+                        <h4 mat-line>Transmission: Automatic</h4>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="vehicle._class.includes('Car') || vehicle._class.includes('Van')">
+                        <h4 mat-line>Seating Capacity: {{vehicle.noOfSeats}}</h4>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="vehicle.hasAC && vehicle._class.includes('Car')">
+                        <h4 mat-line>AC: True</h4>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="vehicle._class.includes('Van')">
+                        <h4 mat-line>No. of Luggages: {{vehicle.noOfLuggages}}</h4>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="vehicle._class.includes('Motorbike')">
+                        <h4 mat-line>Motorbike Style {{vehicle.style}}</h4>
+                    </mat-list-item>
+                    <mat-list-item *ngIf="vehicle.hasHelmet && vehicle._class.includes('Motorbike')">
+                        <h4 mat-line>Helmet: {{vehicle.hasHelmet}}</h4>
+                    </mat-list-item>
+                    <!--the end of the vehicle information-->
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </mat-grid-tile>
+    <!--the form used to enter the details of the driver-->
+    <mat-grid-tile colspan="5">
+        <mat-card id="bookingForm">
+            <mat-card-header>
+                <mat-card-title>DRIVER'S INFORMATION</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <!--form group is assigned-->
+                <form [formGroup]="bookingService.formGroup">
+                    <!--the form fields are displayed and an appropriate messages are displayed under the form fields if the user enters any oncorrect information-->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Driver's First Name</mat-label>
+                        <input matInput placeholder="Steve" [formControl]="bookingService.formGroup.controls['fname']"
+                            required>
+                        <mat-error *ngIf="bookingService.formGroup.controls['fname'].invalid">{{getFNameErrMes()}}
+                        </mat-error>
+                    </mat-form-field><br>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Driver's Last Name</mat-label>
+                        <input matInput placeholder="Jobs" [formControl]="bookingService.formGroup.controls['lname']"
+                            required>
+                        <mat-error *ngIf="bookingService.formGroup.controls['lname'].invalid">{{getLNameErrMes()}}
+                        </mat-error>
+                    </mat-form-field><br>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Date of Birth</mat-label>
+                        <input matInput [matDatepicker]="dateOfBirth" [min]="maxDateOfBirth" [max]="minDateOfBirth"
+                            placeholder="Date of Birth" [formControl]="bookingService.formGroup.controls['dob']"
+                            required>
+                        <mat-datepicker-toggle [for]="dateOfBirth" matSuffix>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #dateOfBirth></mat-datepicker>
+                        <mat-error *ngIf="bookingService.formGroup.controls['dob'].valid">{{getDobErrMes()}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email Address</mat-label>
+                        <input matInput placeholder="stevejobs@gmail.com"
+                            [formControl]="bookingService.formGroup.controls['email']" required>
+                        <mat-error *ngIf="bookingService.formGroup.controls['email'].invalid">{{getEmailErrMes()}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Telephone Number</mat-label>
+                        <input matInput placeholder="01234 234567"
+                            [formControl]="bookingService.formGroup.controls['telphoneNo']" required>
+                        <mat-error *ngIf="bookingService.formGroup.controls['telphoneNo'].invalid">{{getTelErrMes()}}
+                        </mat-error>
+                    </mat-form-field>
+                </form>
+                <!--end of the form-->
+            </mat-card-content>
+            <!--if the user has entered the information incorrectly then the submit will be displayed if the form is valid the submit button is not disabled-->
+            <mat-card-actions id="formButton" class="text-center">
+                <button mat-raised-button [disabled]="bookingService.formGroup.invalid" (click)="onSubmit()"
+                    color="primary">SUBMIT</button>
+            </mat-card-actions>
+        </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>

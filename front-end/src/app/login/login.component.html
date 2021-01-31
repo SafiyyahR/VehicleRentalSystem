@@ -1,0 +1,31 @@
+<!--login form-->
+<mat-card id="login-card" class="text-center">
+    <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content id="login-card-content">
+        <!--assigning the formGroup-->
+        <form [formGroup]="bookingService.loginFormGroup">
+            <!--the username field and the password field with error message feature if the user doesnt fill the form correctly-->
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Steve" [formControl]="bookingService.loginFormGroup.controls['username']"
+                    required>
+                <mat-error *ngIf="bookingService.loginFormGroup.controls['username'].invalid">{{getUserErrMes()}}
+                </mat-error>
+            </mat-form-field><br>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" placeholder="Jobs"
+                    [formControl]="bookingService.loginFormGroup.controls['password']" required>
+                <mat-error *ngIf="bookingService.loginFormGroup.controls['password'].invalid">{{getPasswordErrMes()}}
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions id="formButton" class="text-center">
+        <!--the login button is displayed until the user has entered the details correctly-->
+        <button mat-raised-button [disabled]="bookingService.loginFormGroup.invalid" (click)="onSubmit()"
+            color="primary">LOGIN</button>
+    </mat-card-actions>
+</mat-card>

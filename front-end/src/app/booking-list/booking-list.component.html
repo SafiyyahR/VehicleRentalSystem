@@ -1,0 +1,52 @@
+<!--card which contains a table which is used display all the bookings made in the system-->
+<mat-card>
+    <mat-card-content>
+        <table class="table table-striped">
+            <!--the headings of the tables-->
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Date Booked</th>
+                    <th>Driver's Name</th>
+                    <th>Driver's Telephone No.</th>
+                    <th>Pick Up Date</th>
+                    <th>Drop Off Date</th>
+                    <th>Actions</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <!--the records-->
+            <tbody>
+                <!--if there are no bookings this row will be displayed-->
+                <tr *ngIf="bookings.length===0">
+                    <td colspan="6">
+                        <h3 class="text-center">No bookings have been made yet</h3>
+                    </td>
+                </tr>
+                <!--if there are rows available then the row below will be displayed using ngFor we will iterate through the list of bookings and display the booking-->
+                <tr *ngFor="let booking of bookings">
+                    <td>{{booking._id}}</td>
+                    <td>{{booking.schedule.dateBooked}}</td>
+                    <td>{{booking.driverFirstName}} {{booking.driverLastName}}</td>
+                    <td>{{booking.driverTelNo}}</td>
+                    <td>{{booking.schedule.pickUpDate}}</td>
+                    <td>{{booking.schedule.dropOffDate}}</td>
+                    <!--the actions that can be to the record-->
+                    <!--delete a booking-->
+                    <td id="actions"><button mat-icon-button color="warn" (click)="deleteBooking(booking._id)">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button>
+                        <!--view all the details of the booking-->
+                        <button mat-icon-button (click)="openDialog(booking)">
+                            <mat-icon>launch</mat-icon>
+                        </button>
+                        <!--update a booking-->
+                        <button mat-icon-button (click)="updateBooking(booking)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+</mat-card>

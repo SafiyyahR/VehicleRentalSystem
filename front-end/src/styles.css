@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+html { 
+   margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  min-height: 100%;
+}
+body{
+  margin: 0;
+  background-image:url(../images/index.jpg);
+     background-position: top;
+     background-repeat: repeat-y;
+}
+
+/* #wrapper{
+    min-height:50%;
+    position:relative;
+}
+footer {
+  position: absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:40px;
+} */
+.mat-grid-tile .mat-figure {
+  justify-content: flex-start !important ;
+  align-items: flex-start !important;
+}
+
+.myContainer{
+  padding:3% 5%;
+  min-height:inherit;
+}
+.heading-top{
+  height:40px;
+}
+
+

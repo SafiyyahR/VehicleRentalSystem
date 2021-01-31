@@ -1,0 +1,11 @@
+#login-card-content, #login-card{
+    width:400px;
+}
+
+#login-card{
+    margin: 3% 0% 0% 400px;
+}
+
+#formButton{
+    margin: 2%;
+}

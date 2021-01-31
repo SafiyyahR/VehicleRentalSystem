@@ -1,0 +1,10 @@
+.mat-card, .mat-figure, .mat-grid-tile{
+    margin:0;
+    padding: 0;
+    width:100%;
+}
+
+#actions{
+    padding: 0px 12px;
+}
+

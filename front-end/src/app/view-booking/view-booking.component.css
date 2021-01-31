@@ -1,0 +1,10 @@
+#vehicleSub{
+    margin-top: 40px;
+}
+#subHeader1, #subHeader2, #subHeader3{
+    color: rgba(0, 0, 0, 0.822);
+}
+
+.mat-dialog-container{
+    padding:0px;
+}

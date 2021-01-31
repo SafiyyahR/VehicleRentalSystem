@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Update Booking</h2>
+<!--assignin the formGroup with the bookingService's formGroup-->
+<form [formGroup]="bookingService.formGroup">
+      <!--the form fields are displayed and an appropriate messages are displayed under the form fields if the user enters any oncorrect information-->
+        <mat-form-field appearance="outline">
+            <mat-label>Driver's First Name</mat-label>
+            <input matInput placeholder="Steve" [formControl]="bookingService.formGroup.controls['fname']" required>
+            <mat-error *ngIf="bookingService.formGroup.controls['fname'].invalid">{{getFNameErrMes()}}</mat-error>
+        </mat-form-field><br>
+        <mat-form-field appearance="outline">
+            <mat-label>Driver's Last Name</mat-label>
+            <input matInput placeholder="Jobs" [formControl]="bookingService.formGroup.controls['lname']" required>
+            <mat-error *ngIf="bookingService.formGroup.controls['lname'].invalid">{{getLNameErrMes()}}</mat-error>
+        </mat-form-field><br>
+        <mat-form-field appearance="outline">
+                <mat-label>Date of Birth</mat-label>
+            <input matInput [matDatepicker]="dateOfBirth" [min]="maxDateOfBirth" [max]="minDateOfBirth"
+                placeholder="Date of Birth" [formControl]="bookingService.formGroup.controls['dob']" required>
+            <mat-datepicker-toggle [for]="dateOfBirth" matSuffix>
+            </mat-datepicker-toggle>
+            <mat-datepicker #dateOfBirth></mat-datepicker>
+            <mat-error *ngIf="bookingService.formGroup.controls['dob'].valid">{{getDobErrMes()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Email Address</mat-label>
+            <input matInput placeholder="stevejobs@gmail.com" [formControl]="bookingService.formGroup.controls['email']" required>
+            <mat-error *ngIf="bookingService.formGroup.controls['email'].invalid">{{getEmailErrMes()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Telephone Number</mat-label>
+            <input matInput placeholder="01234 234567" [formControl]="bookingService.formGroup.controls['telphoneNo']" required>
+            <mat-error *ngIf="bookingService.formGroup.controls['telphoneNo'].invalid">{{getTelErrMes()}}</mat-error>
+        </mat-form-field>
+    </form><!--end of the form-->
+    <!--RESET set the form to the initially saved values and the submit button changes the value in the database-->
+    <button mat-raised-button (click)="onReset()" color="warn">RESET</button>
+    <button mat-raised-button [disabled]="bookingService.formGroup.invalid" (click)="onSubmit()" color="primary">SUBMIT</button>

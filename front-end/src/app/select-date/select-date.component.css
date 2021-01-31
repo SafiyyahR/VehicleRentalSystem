@@ -1,0 +1,23 @@
+.mat-card{
+    background-color: white;
+    margin:2% 10% 2% 15%;
+    width: 800px;;
+}
+#heading{
+    margin:0% 6%;
+}
+.mat-grid-list{
+    margin: 3% 4%;
+    padding: 0px;
+}
+.mat-card-content{
+    height: 75px;
+}
+
+.mat-form-field{
+    margin-left: 30px;;
+}
+#selectDateButton{
+    padding-bottom: 10px;
+}
+

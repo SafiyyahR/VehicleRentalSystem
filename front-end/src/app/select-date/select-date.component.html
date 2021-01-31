@@ -1,0 +1,37 @@
+<div class="heading-top" id="dateHeading">
+    <h3 id="heading" class="text-white">Select Date</h3>
+</div>
+<!--the card is used to have two form fields one for the pick up date and the other for the drop off date-->
+<mat-card>
+    <mat-card-content>
+        <mat-grid-list cols="2" rowHeight="4:1">
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                        <mat-label>Pick-Up Date</mat-label>
+                        <!--the pick up date-->
+                    <input matInput [matDatepicker]="pickUpDate1" [min]="minPickUpDate" [max]="maxPickUpDate" placeholder="Pick-up Date"
+                        (dateChange)="setDropOffDate($event)" [formControl]="pickUpDate" required>
+                    <mat-datepicker-toggle [for]="pickUpDate1" matSuffix>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #pickUpDate1></mat-datepicker>
+                </mat-form-field>
+                <!--end of pick up date-->
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <!--drop off date-->
+                <mat-form-field appearance="outline">
+                        <mat-label>Drop-Off Date</mat-label>
+                    <input matInput [matDatepicker]="dropOffDate1" [min]="minDropOffDate" [max]="maxDropOffDate" placeholder="Drop-off Date"
+                        [formControl]="dropOffDate" required>
+                    <mat-datepicker-toggle [for]="dropOffDate1" matSuffix>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #dropOffDate1></mat-datepicker>
+                </mat-form-field><!--end of drop off date-->
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card-content>
+    <!--the submit button is used to validate the date and show the available vehicles for the chosen schedule-->
+    <mat-card-actions id="selectDateButton"class="text-center">
+        <button  mat-raised-button color="primary" (click)="onSubmit()">FIND YOUR CAR</button>
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,13 @@
+mat-card{
+    margin: 2%;
+    width:100%;
+}
+#heading{
+    width: 50%;
+    float: left;
+}
+#sort-buttons{
+    width: 50%;
+    float: left;
+}
+

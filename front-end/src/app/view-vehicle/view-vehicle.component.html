@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{vehicle.make}} {{vehicle.model}}</h2>
+<div mat-dialog-content>
+    <!--all the vehicle information-->
+    <mat-grid-list cols="2" rowHeight="10:1">
+        <mat-grid-tile *ngIf="vehicle._class.includes('Car')">Type: Car
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle._class.includes('Van')">Type: Van
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle._class.includes('Motorbike')">Type: Motorbike
+        </mat-grid-tile>
+        <mat-grid-tile>Rate/hr: &#163;{{vehicle.rentalPerHour}}</mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle.isManual">Transmission: Manual</mat-grid-tile>
+        <mat-grid-tile *ngIf="!vehicle.isManual">Transmission: Automatic</mat-grid-tile>
+        <mat-grid-tile>Colour: {{vehicle.colour}}</mat-grid-tile>
+        <mat-grid-tile>Registration Year: {{vehicle.registrationYear}}</mat-grid-tile>
+        <mat-grid-tile>Mileage: {{vehicle.mileage}}</mat-grid-tile>
+        <mat-grid-tile>Engine Displacement: {{vehicle.engineDisplacement}}</mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle._class.includes('Car') || vehicle._class.includes('Van')">Seating Capacity:
+            {{vehicle.noOfSeats}}</mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle.hasAC && vehicle._class.includes('Car')">AC: True</mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle._class.includes('Car')">No. of Doors: {{vehicle.noOfDoors}}
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle._class.includes('Van')">No. of Luggages: {{vehicle.noOfLuggages}}
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle._class.includes('Motorbike')">Motorbike Style: {{vehicle.style}}</mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle._class.includes('Motorbike')">Locker Box: {{vehicle.hasLockerBox}}</mat-grid-tile>
+        <mat-grid-tile *ngIf="vehicle.hasHelmet && vehicle._class.includes('Motorbike')">Helmet: {{vehicle.hasHelmet}}
+        </mat-grid-tile>
+    </mat-grid-list>
+    <!--end of the vehicle information-->
+</div>
